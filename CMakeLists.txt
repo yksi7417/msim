@@ -16,12 +16,19 @@ endif()
 find_package(Boost REQUIRED)
 find_package(OpenSSL REQUIRED)
 
+# Find Fix8 library
+find_path(FIX8_INCLUDE_DIR NAMES fix8/f8config.hpp PATHS /usr/local/include /usr/include)
+find_library(FIX8_LIBRARY NAMES fix8 PATHS /usr/local/lib /usr/lib)
+
+if(NOT FIX8_INCLUDE_DIR OR NOT FIX8_LIBRARY)
+    message(FATAL_ERROR "Fix8 library not found. Please install Fix8 first.")
+endif()
+
 include_directories(${Boost_INCLUDE_DIRS})
-include_directories(/usr/local/include)
-link_directories(/usr/local/lib)
+include_directories(${FIX8_INCLUDE_DIR})
 
 add_executable(fill_sim src/fill_sim.cpp)
-target_link_libraries(fill_sim fix8)
+target_link_libraries(fill_sim ${FIX8_LIBRARY})
 
 add_executable(test_smoke tests/test_smoke.cpp)
-target_link_libraries(test_smoke fix8)
+target_link_libraries(test_smoke ${FIX8_LIBRARY})

@@ -28,6 +28,12 @@ jobs:
           CXXFLAGS="-Wno-class-memaccess -Wno-unused-result -Wno-overloaded-virtual -Wno-deprecated-declarations" ./configure
           make -j$(nproc)
           sudo make install
+          sudo ldconfig
+
+      - name: Verify Fix8 installation
+        run: |
+          chmod +x verify_fix8.sh
+          ./verify_fix8.sh
 
       - name: Build project
         run: |
@@ -37,4 +43,6 @@ jobs:
           make -j$(nproc)
 
       - name: Run smoke test
-        run: ./tests/test_smoke
+        run: |
+          cd build
+          ./test_smoke

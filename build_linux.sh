@@ -25,6 +25,7 @@ CXXFLAGS="-Wno-class-memaccess -Wno-unused-result -Wno-overloaded-virtual -Wno-d
 # Build and install Fix8
 make -j$(nproc)
 sudo make install
+sudo ldconfig
 
 cd ..
 
