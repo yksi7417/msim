@@ -16,14 +16,14 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y cmake libboost-all-dev libssl-dev libxml2-dev
+          sudo apt install -y cmake libboost-all-dev libssl-dev libxml2-dev libtool autoconf automake
 
       - name: Build Fix8
         run: |
           git clone https://github.com/fix8/fix8.git
           cd fix8
-          mkdir build && cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release
+          ./bootstrap
+          ./configure
           make -j$(nproc)
           sudo make install
 
