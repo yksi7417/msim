@@ -20,8 +20,9 @@ find_package(OpenSSL REQUIRED)
 # Find Fix8 library
 if(WIN32)
     # On Windows, look for Fix8 in the build directory first
+    # Look for the directory that contains fix8/f8config.h
     find_path(FIX8_INCLUDE_DIR NAMES fix8/f8config.h fix8/f8config.hpp PATHS 
-        ${CMAKE_SOURCE_DIR}/fix8/include 
+        ${CMAKE_SOURCE_DIR}/fix8/include   # This will find fix8/include as the path
         ${CMAKE_SOURCE_DIR}/fix8/src
         C:/fix8/include
         ${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/include)
@@ -33,11 +34,12 @@ if(WIN32)
         ${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/lib)
 else()
     # On Unix-like systems, check local fix8 directory first
+    # Look for the directory that contains fix8/f8config.h
     find_path(FIX8_INCLUDE_DIR NAMES fix8/f8config.h fix8/f8config.hpp PATHS 
-        ${CMAKE_SOURCE_DIR}/fix8/include 
+        ${CMAKE_SOURCE_DIR}/fix8/include   # This will find fix8/include as the path, so #include <fix8/...> works
         ${CMAKE_SOURCE_DIR}/fix8/src
         ${CMAKE_SOURCE_DIR}/fix8
-        /usr/local/include 
+        /usr/local/include                 # This will find /usr/local/include, so #include <fix8/...> works
         /usr/include)
     find_library(FIX8_LIBRARY NAMES fix8 PATHS 
         ${CMAKE_SOURCE_DIR}/fix8/.libs
@@ -64,7 +66,7 @@ else()
 endif()
 
 include_directories(${Boost_INCLUDE_DIRS})
-include_directories(${FIX8_INCLUDE_DIR})
+# Note: FIX8_INCLUDE_DIR is already added above when Fix8 is found
 
 add_executable(fill_sim src/fill_sim.cpp)
 target_link_libraries(fill_sim ${FIX8_LINK_LIBRARIES})
