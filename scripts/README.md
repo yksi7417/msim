@@ -1,44 +1,49 @@
 # Build Scripts
 
-This directory contains helper scripts for building Fix8 with suppressed warnings.
+This directory contains helper scripts and documentation for building the msim project.
 
-## Linux/Unix Scripts
+## Main Build Scripts (in project root)
 
-### `build_fix8_quiet.sh`
-Builds Fix8 from source with compiler warnings suppressed for cleaner output.
+The primary build scripts are located in the project root directory:
+
+### `build_linux.sh`
+Complete Linux/Unix build script that:
+- Installs system dependencies 
+- Builds Fix8 from source with warning suppressions
+- Builds the msim project
 
 **Usage:**
 ```bash
-./scripts/build_fix8_quiet.sh
+./build_linux.sh
 ```
 
-**Requirements:**
-- git
-- autotools (autoconf, automake, libtool)
-- POCO C++ Libraries development packages
-- Standard build tools (gcc, make)
-
-## Windows Scripts
-
-### `build_fix8_quiet.ps1`
-PowerShell script for building Fix8 on Windows with Visual Studio.
+### `build_win.ps1`
+Complete Windows build script that:
+- Installs dependencies via vcpkg
+- Builds Fix8 using Visual Studio/MSBuild
+- Builds the msim project with CMake
 
 **Usage:**
 ```powershell
-.\scripts\build_fix8_quiet.ps1
+.\build_win.ps1
 ```
 
-**Requirements:**
+## Requirements
+
+### Linux/Unix
+- git
+- autotools (autoconf, automake, libtool)
+- POCO C++ Libraries development packages
+- Standard build tools (gcc, make, cmake)
+
+### Windows
 - Visual Studio with C++ support
 - Git
-- vcpkg (recommended for dependencies)
-
-**Note:** Windows builds may require additional manual configuration. Refer to the 
-[Fix8 Windows build documentation](https://fix8engine.atlassian.net/wiki/x/EICW) for detailed instructions.
+- vcpkg (with VCPKG_ROOT environment variable set)
 
 ## Warning Suppressions
 
-Both scripts apply the following compiler flags to reduce noise in build output:
+Both build scripts apply compiler flags to reduce noise in build output from the Fix8 dependency:
 - `-Wno-class-memaccess`: Safe memcpy usage on POD structures
 - `-Wno-unused-result`: Ignored return values in utility functions  
 - `-Wno-overloaded-virtual`: Intentional virtual function hiding
