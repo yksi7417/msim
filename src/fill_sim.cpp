@@ -3,16 +3,16 @@
 #ifdef _WIN32
     // On Windows, use stub if Fix8 is not available
     #ifdef FIX8_AVAILABLE
-        #include <fix8/f8includes.hpp>
-        #include <fix8/f8config.hpp>
+        #include <fix8/f8includes.h>
+        #include <fix8/f8config.h>
     #else
         #include "../include/fix8_stub.hpp"
         #warning "Using Fix8 stub - full Fix8 functionality not available"
     #endif
 #else
     // On Unix-like systems, use full Fix8
-    #include <fix8/f8includes.hpp>
-    #include <fix8/f8config.hpp>
+    #include <fix8/f8includes.h>
+    #include <fix8/f8config.h>
 #endif
 
 int main()

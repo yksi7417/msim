@@ -7,11 +7,17 @@ echo "Searching for Fix8 headers..."
 
 HEADER_FOUND=false
 HEADER_LOCATIONS=(
+    "fix8/include/fix8/f8config.h"
     "fix8/include/fix8/f8config.hpp"
-    "fix8/src/fix8/f8config.hpp" 
+    "fix8/src/fix8/f8config.h" 
+    "fix8/src/fix8/f8config.hpp"
+    "fix8/f8config.h"
     "fix8/f8config.hpp"
+    "/usr/local/include/fix8/f8config.h"
     "/usr/local/include/fix8/f8config.hpp"
+    "/usr/include/fix8/f8config.h"
     "/usr/include/fix8/f8config.hpp"
+    "/opt/fix8/include/fix8/f8config.h"
     "/opt/fix8/include/fix8/f8config.hpp"
 )
 

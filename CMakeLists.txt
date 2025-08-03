@@ -20,7 +20,7 @@ find_package(OpenSSL REQUIRED)
 # Find Fix8 library
 if(WIN32)
     # On Windows, look for Fix8 in the build directory first
-    find_path(FIX8_INCLUDE_DIR NAMES fix8/f8config.hpp PATHS 
+    find_path(FIX8_INCLUDE_DIR NAMES fix8/f8config.h fix8/f8config.hpp PATHS 
         ${CMAKE_SOURCE_DIR}/fix8/include 
         ${CMAKE_SOURCE_DIR}/fix8/src
         C:/fix8/include
@@ -33,7 +33,7 @@ if(WIN32)
         ${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/lib)
 else()
     # On Unix-like systems, check local fix8 directory first
-    find_path(FIX8_INCLUDE_DIR NAMES fix8/f8config.hpp PATHS 
+    find_path(FIX8_INCLUDE_DIR NAMES fix8/f8config.h fix8/f8config.hpp PATHS 
         ${CMAKE_SOURCE_DIR}/fix8/include 
         ${CMAKE_SOURCE_DIR}/fix8/src
         ${CMAKE_SOURCE_DIR}/fix8
