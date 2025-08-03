@@ -8,7 +8,6 @@ $Fix8LibraryPath = ""
 
 # Check common locations for Fix8 headers
 $HeaderPaths = @(
-    "C:\fix8\include\fix8\f8config.hpp",
     "fix8\include\fix8\f8config.hpp",
     "fix8\src\fix8\f8config.hpp"
 )

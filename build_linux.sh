@@ -27,6 +27,16 @@ make -j$(nproc)
 sudo make install
 sudo ldconfig
 
+echo "Fix8 build completed. Checking what was built:"
+echo "Headers in fix8 directory:"
+find fix8 -name "*.hpp" -o -name "*.h" | head -10
+echo "Libraries in fix8 directory:"
+find fix8 -name "*.so" -o -name "*.a" | head -10
+echo "Installed headers:"
+ls -la /usr/local/include/fix8/ 2>/dev/null || echo "No headers in /usr/local/include/fix8/"
+echo "Installed libraries:"
+ls -la /usr/local/lib/libfix8* 2>/dev/null || echo "No libraries in /usr/local/lib/"
+
 cd ..
 
 # Configure and build our project

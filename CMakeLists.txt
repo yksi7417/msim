@@ -31,9 +31,19 @@ if(WIN32)
         C:/fix8/lib
         ${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/lib)
 else()
-    # On Unix-like systems
-    find_path(FIX8_INCLUDE_DIR NAMES fix8/f8config.hpp PATHS /usr/local/include /usr/include)
-    find_library(FIX8_LIBRARY NAMES fix8 PATHS /usr/local/lib /usr/lib)
+    # On Unix-like systems, check local fix8 directory first
+    find_path(FIX8_INCLUDE_DIR NAMES fix8/f8config.hpp PATHS 
+        ${CMAKE_SOURCE_DIR}/fix8/include 
+        ${CMAKE_SOURCE_DIR}/fix8/src
+        ${CMAKE_SOURCE_DIR}/fix8
+        /usr/local/include 
+        /usr/include)
+    find_library(FIX8_LIBRARY NAMES fix8 PATHS 
+        ${CMAKE_SOURCE_DIR}/fix8/.libs
+        ${CMAKE_SOURCE_DIR}/fix8/lib
+        ${CMAKE_SOURCE_DIR}/fix8
+        /usr/local/lib 
+        /usr/lib)
 endif()
 
 # Handle Fix8 availability

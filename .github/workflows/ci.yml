@@ -23,12 +23,26 @@ jobs:
         run: |
           git clone https://github.com/fix8/fix8.git
           cd fix8
+          echo "Fix8 directory contents:"
+          ls -la
+          
+          echo "Running bootstrap..."
           ./bootstrap
+          
+          echo "Configuring Fix8..."
           # Configure with suppressed warnings for cleaner CI output
-          CXXFLAGS="-Wno-class-memaccess -Wno-unused-result -Wno-overloaded-virtual -Wno-deprecated-declarations" ./configure
+          CXXFLAGS="-Wno-class-memaccess -Wno-unused-result -Wno-overloaded-virtual -Wno-deprecated-declarations" ./configure --prefix=/usr/local
+          
+          echo "Building Fix8..."
           make -j$(nproc)
+          
+          echo "Installing Fix8..."
           sudo make install
           sudo ldconfig
+          
+          echo "Fix8 installation completed. Checking installation:"
+          ls -la /usr/local/include/fix8/ || echo "Headers not in /usr/local/include/fix8/"
+          ls -la /usr/local/lib/libfix8* || echo "Libraries not in /usr/local/lib/"
 
       - name: Verify Fix8 installation
         run: |
