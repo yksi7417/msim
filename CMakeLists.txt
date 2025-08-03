@@ -8,6 +8,8 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang
     add_compile_options(
         -Wno-class-memaccess    # Safe memcpy usage on POD-like structures
         -Wno-unused-result      # Ignored std::string::empty() results in regex utils
+        -Wno-overloaded-virtual # Fix8 Router virtual function hiding
+        -Wno-deprecated-declarations # pthread_yield deprecation in Fix8
     )
 endif()
 
