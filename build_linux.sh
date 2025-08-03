@@ -19,7 +19,7 @@ cd fix8
 
 # Configure with suppressed warnings
 echo "Configuring Fix8 with warning suppressions..."
-CXXFLAGS="-Wno-class-memaccess -Wno-unused-result -Wno-overloaded-virtual -Wno-deprecated-declarations" \
+CXXFLAGS="-Wno-class-memaccess -Wno-unused-result -Wno-overloaded-virtual -Wno-deprecated-declarations -Wno-extra-qualification" \
     ./configure
 
 # Build and install Fix8

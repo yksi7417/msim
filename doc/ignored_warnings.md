@@ -14,3 +14,4 @@ via CMake flags. The suppressions below only apply to our project's compilation 
 | `-Wno-unused-result`   | Triggered by `std::string::empty()` result being ignored in regex utils. |
 | `-Wno-overloaded-virtual` | Fix8 Router virtual function hiding pattern is intentional. |
 | `-Wno-deprecated-declarations` | Fix8 uses `pthread_yield()` which is deprecated but still functional. |
+| `-Wno-extra-qualification` | Fix8 friend function declaration issues in f8cutils.cpp (harmless). |

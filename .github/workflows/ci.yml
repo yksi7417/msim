@@ -31,7 +31,7 @@ jobs:
           
           echo "Configuring Fix8..."
           # Configure with suppressed warnings for cleaner CI output
-          CXXFLAGS="-Wno-class-memaccess -Wno-unused-result -Wno-overloaded-virtual -Wno-deprecated-declarations" ./configure --prefix=/usr/local
+          CXXFLAGS="-Wno-class-memaccess -Wno-unused-result -Wno-overloaded-virtual -Wno-deprecated-declarations -Wno-extra-qualification" ./configure --prefix=/usr/local
           
           echo "Building Fix8..."
           make -j$(nproc)
