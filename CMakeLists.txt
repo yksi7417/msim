@@ -3,6 +3,14 @@ project(fix8_fill_sim)
 
 set(CMAKE_CXX_STANDARD 17)
 
+# Suppress specific warnings as documented in doc/ignored_warnings.md
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    add_compile_options(
+        -Wno-class-memaccess    # Safe memcpy usage on POD-like structures
+        -Wno-unused-result      # Ignored std::string::empty() results in regex utils
+    )
+endif()
+
 find_package(Boost REQUIRED)
 find_package(OpenSSL REQUIRED)
 
