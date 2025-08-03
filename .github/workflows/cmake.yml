@@ -20,7 +20,7 @@ jobs:
 
       - name: Build Fix8
         run: |
-          git clone https://github.com/yksi7417/msim.git
+          git clone https://github.com/fix8/fix8.git
           cd fix8
           mkdir build && cd build
           cmake .. -DCMAKE_BUILD_TYPE=Release
