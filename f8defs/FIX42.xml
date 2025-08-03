@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fix major="4" type="FIX" servicepack="0" minor="2">
+  <header>
+    <field name="BeginString" required="Y"/>
+    <field name="BodyLength" required="Y"/>
+    <field name="MsgType" required="Y"/>
+    <field name="SenderCompID" required="Y"/>
+    <field name="TargetCompID" required="Y"/>
+    <field name="MsgSeqNum" required="Y"/>
+    <field name="SendingTime" required="Y"/>
+  </header>
+  <messages>
+    <message name="Logon" msgtype="A" msgcat="admin"/>
+    <message name="Heartbeat" msgtype="0" msgcat="admin"/>
+    <message name="TestRequest" msgtype="1" msgcat="admin"/>
+    <message name="Logout" msgtype="5" msgcat="admin"/>
+    <message name="NewOrderSingle" msgtype="D" msgcat="app"/>
+    <message name="ExecutionReport" msgtype="8" msgcat="app"/>
+  </messages>
+  <trailer>
+    <field name="CheckSum" required="Y"/>
+  </trailer>
+</fix>
