@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 
 # Set VCPKG path and triplet
-$VCPKG_ROOT = "$env:USERPROFILE\vcpkg"
+$VCPKG_ROOT = "$env:VCPKG_ROOT"
 $VCPKG_TRIPLET = "x64-windows"
 
 # Install dependencies (assumes vcpkg already installed)
