@@ -17,8 +17,9 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y cmake libboost-all-dev libssl-dev libxml2-dev libtool autoconf automake
+          sudo apt install -y libpoco-dev
 
-      - name: Build Fix8
+          - name: Build Fix8
         run: |
           git clone https://github.com/fix8/fix8.git
           cd fix8
