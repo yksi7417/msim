@@ -8,8 +8,12 @@ $Fix8LibraryPath = ""
 
 # Check common locations for Fix8 headers
 $HeaderPaths = @(
+    "fix8\include\fix8\f8config.h",
     "fix8\include\fix8\f8config.hpp",
-    "fix8\src\fix8\f8config.hpp"
+    "fix8\src\fix8\f8config.h",
+    "fix8\src\fix8\f8config.hpp",
+    "fix8\build\include\fix8\f8config.h",
+    "C:\fix8\include\fix8\f8config.h"
 )
 
 foreach ($path in $HeaderPaths) {
@@ -31,11 +35,15 @@ if (-not $Fix8Found) {
 
 # Check for Fix8 libraries
 $LibraryPaths = @(
-    "C:\fix8\lib\fix8.lib",
-    "C:\fix8\lib\libfix8.lib",  
+    "fix8\build\Release\fix8.lib",
+    "fix8\build\Debug\fix8.lib", 
+    "fix8\.libs\libfix8.a",
     "fix8\lib\fix8.lib",
+    "fix8\lib\libfix8.lib",
     "fix8\Release\fix8.lib",
-    "fix8\x64\Release\fix8.lib"
+    "fix8\x64\Release\fix8.lib",
+    "C:\fix8\lib\fix8.lib",
+    "C:\fix8\lib\libfix8.lib"
 )
 
 $LibraryFound = $false

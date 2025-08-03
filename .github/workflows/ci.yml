@@ -59,4 +59,90 @@ jobs:
       - name: Run smoke test
         run: |
           cd build
+          echo "Running smoke test..."
           ./test_smoke
+          
+          echo "Running fill_sim to check Fix8 integration..."
+          ./fill_sim
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup vcpkg
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Cache vcpkg
+        uses: actions/cache@v4
+        with:
+          path: |
+            C:\vcpkg\installed
+            C:\vcpkg\packages
+          key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-
+
+      - name: Install vcpkg and dependencies
+        run: |
+          git clone https://github.com/Microsoft/vcpkg.git C:\vcpkg
+          C:\vcpkg\bootstrap-vcpkg.bat
+          C:\vcpkg\vcpkg install poco boost openssl zlib libxml2 --triplet=x64-windows
+
+      - name: Build Fix8 (or use stub)
+        run: |
+          git clone https://github.com/fix8/fix8.git
+          cd fix8
+          
+          # Check if Fix8 has CMake support
+          if (Test-Path "CMakeLists.txt") {
+              Write-Host "Building Fix8 with CMake..."
+              mkdir build -Force
+              cd build
+              cmake .. -DCMAKE_TOOLCHAIN_FILE="C:\vcpkg\scripts\buildsystems\vcpkg.cmake" -A x64 -DCMAKE_BUILD_TYPE=Release
+              cmake --build . --config Release
+              if ($LASTEXITCODE -eq 0) {
+                  Write-Host "Fix8 built successfully!"
+              } else {
+                  Write-Host "Fix8 build failed, will use stub implementation"
+              }
+              cd ..
+          } else {
+              Write-Host "Fix8 does not have CMake support, will use stub implementation"
+          }
+        shell: powershell
+
+      - name: Verify Fix8 installation (Windows)
+        run: |
+          .\verify_fix8.ps1
+        shell: powershell
+
+      - name: Build project
+        run: |
+          mkdir build -Force
+          cd build
+          Write-Host "Configuring project with CMake..." -ForegroundColor Yellow
+          cmake .. -DCMAKE_TOOLCHAIN_FILE="C:\vcpkg\scripts\buildsystems\vcpkg.cmake" -A x64 -DCMAKE_BUILD_TYPE=Release
+          
+          Write-Host "Building project..." -ForegroundColor Yellow
+          cmake --build . --config Release
+          
+          Write-Host "Build completed. Checking output:" -ForegroundColor Green
+          if (Test-Path "Release\fill_sim.exe") {
+              Write-Host "✓ fill_sim.exe built successfully" -ForegroundColor Green
+          }
+          if (Test-Path "Release\test_smoke.exe") {
+              Write-Host "✓ test_smoke.exe built successfully" -ForegroundColor Green
+          }
+        shell: powershell
+
+      - name: Run smoke test
+        run: |
+          cd build\Release
+          Write-Host "Running smoke test..." -ForegroundColor Yellow
+          .\test_smoke.exe
+          
+          Write-Host "Running fill_sim to check Fix8 integration..." -ForegroundColor Yellow
+          .\fill_sim.exe
+        shell: powershell
