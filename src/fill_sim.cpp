@@ -6,7 +6,11 @@
         #include <fix8/f8config.h>
     #else
         #include "../include/fix8_stub.hpp"
-        #warning "Using Fix8 stub - full Fix8 functionality not available"
+        #ifdef _MSC_VER
+            #pragma message("Using Fix8 stub - full Fix8 functionality not available")
+        #else
+            #warning "Using Fix8 stub - full Fix8 functionality not available"
+        #endif
     #endif
 #else
     // On Unix-like systems, use full Fix8

@@ -48,19 +48,47 @@ if (Test-Path "CMakeLists.txt") {
     }
 } elseif (Test-Path "msvc") {
     Write-Host "Using Visual Studio project files..." -ForegroundColor Green
-    # Build using MSBuild if available with warning suppressions
-    if (Get-Command "msbuild" -ErrorAction SilentlyContinue) {
-        msbuild msvc\fix8.sln /p:Configuration=Release /p:Platform=x64 /p:WarningLevel=1
+    
+    # Try to find MSBuild automatically
+    $msbuildPaths = @(
+        "${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe",
+        "${env:ProgramFiles}\Microsoft Visual Studio\2022\Professional\MSBuild\Current\Bin\MSBuild.exe", 
+        "${env:ProgramFiles}\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe",
+        "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe",
+        "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\MSBuild.exe",
+        "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe",
+        "${env:ProgramFiles(x86)}\MSBuild\14.0\Bin\MSBuild.exe"
+    )
+    
+    $msbuildPath = $null
+    foreach ($path in $msbuildPaths) {
+        if (Test-Path $path) {
+            $msbuildPath = $path
+            Write-Host "Found MSBuild at: $path" -ForegroundColor Green
+            break
+        }
+    }
+    
+    if ($msbuildPath) {
+        Write-Host "Building Fix8 with MSBuild..." -ForegroundColor Green
+        & $msbuildPath msvc\fix8.sln /p:Configuration=Release /p:Platform=x64 /p:WarningLevel=1
         if ($LASTEXITCODE -eq 0) {
             Write-Host "Fix8 built successfully!" -ForegroundColor Green
         } else {
-            Write-Error "Fix8 build failed"
-            exit 1
+            Write-Warning "Fix8 MSBuild failed, continuing with stub implementation"
         }
     } else {
-        Write-Warning "MSBuild not found. Please build Fix8 manually using Visual Studio."
-        Write-Host "Open msvc\fix8.sln in Visual Studio and build the Release|x64 configuration."
-        exit 1
+        Write-Warning "MSBuild not found in standard locations."
+        Write-Host "Checked paths:" -ForegroundColor Gray
+        foreach ($path in $msbuildPaths) {
+            Write-Host "  $path" -ForegroundColor Gray
+        }
+        Write-Host "Will use stub implementation for development." -ForegroundColor Yellow
+        Write-Host ""
+        Write-Host "To fix this, either:" -ForegroundColor Cyan
+        Write-Host "1. Install Visual Studio with C++ development tools" -ForegroundColor Cyan
+        Write-Host "2. Run from a Visual Studio Developer Command Prompt" -ForegroundColor Cyan
+        Write-Host "3. Add MSBuild to your PATH" -ForegroundColor Cyan
     }
 } elseif (Test-Path "configure.ac" -or Test-Path "configure") {
     Write-Host "Fix8 appears to be autotools-based, which is not directly supported on Windows." -ForegroundColor Red
