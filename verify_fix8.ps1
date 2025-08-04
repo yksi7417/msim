@@ -10,6 +10,10 @@ $Fix8LibraryPath = ""
 $HeaderPaths = @(
     "fix8\include\fix8\f8config.h",
     "fix8\include\fix8\f8config.hpp",
+    "fix8\include\fix8\session.h",
+    "fix8\include\fix8\session.hpp", 
+    "fix8\include\fix8\message.h",
+    "fix8\include\fix8\message.hpp",
     "fix8\src\fix8\f8config.h",
     "fix8\src\fix8\f8config.hpp",
     "fix8\build\include\fix8\f8config.h",

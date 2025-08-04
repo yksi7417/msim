@@ -73,3 +73,6 @@ target_link_libraries(fill_sim ${FIX8_LINK_LIBRARIES})
 
 add_executable(test_smoke tests/test_smoke.cpp)
 target_link_libraries(test_smoke ${FIX8_LINK_LIBRARIES})
+
+add_executable(test_integration tests/test_integration.cpp)
+target_link_libraries(test_integration ${FIX8_LINK_LIBRARIES})

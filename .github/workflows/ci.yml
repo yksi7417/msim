@@ -64,6 +64,9 @@ jobs:
           
           echo "Running fill_sim to check Fix8 integration..."
           ./fill_sim
+          
+          echo "Running integration test..."
+          ./test_integration
 
   build-windows:
     runs-on: windows-latest
@@ -135,6 +138,9 @@ jobs:
           if (Test-Path "Release\test_smoke.exe") {
               Write-Host "✓ test_smoke.exe built successfully" -ForegroundColor Green
           }
+          if (Test-Path "Release\test_integration.exe") {
+              Write-Host "✓ test_integration.exe built successfully" -ForegroundColor Green
+          }
         shell: powershell
 
       - name: Run smoke test
@@ -145,4 +151,7 @@ jobs:
           
           Write-Host "Running fill_sim to check Fix8 integration..." -ForegroundColor Yellow
           .\fill_sim.exe
+          
+          Write-Host "Running integration test..." -ForegroundColor Yellow
+          .\test_integration.exe
         shell: powershell
