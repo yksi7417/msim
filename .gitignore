@@ -40,6 +40,12 @@
 # debug information files
 *.dwo
 
+# Build directories
+build/
 build/**
+build_*/
 build_*/**
+
+# Fix8 source directory (cloned during build)
+fix8/
 fix8/**
