@@ -22,7 +22,7 @@ $HeaderPaths = @(
 
 foreach ($path in $HeaderPaths) {
     if (Test-Path $path) {
-        Write-Host "✓ Fix8 headers found at: $path" -ForegroundColor Green
+        Write-Host "[SUCCESS] Fix8 headers found at: $path" -ForegroundColor Green
         $Fix8HeaderPath = $path
         $Fix8Found = $true
         break
@@ -30,7 +30,7 @@ foreach ($path in $HeaderPaths) {
 }
 
 if (-not $Fix8Found) {
-    Write-Host "⚠ Fix8 headers not found in standard locations" -ForegroundColor Yellow
+    Write-Host "[WARNING] Fix8 headers not found in standard locations" -ForegroundColor Yellow
     Write-Host "  Checked paths:" -ForegroundColor Gray
     foreach ($path in $HeaderPaths) {
         Write-Host "    $path" -ForegroundColor Gray
@@ -53,7 +53,7 @@ $LibraryPaths = @(
 $LibraryFound = $false
 foreach ($path in $LibraryPaths) {
     if (Test-Path $path) {
-        Write-Host "✓ Fix8 library found at: $path" -ForegroundColor Green
+        Write-Host "[SUCCESS] Fix8 library found at: $path" -ForegroundColor Green
         $Fix8LibraryPath = $path
         $LibraryFound = $true
         break
@@ -61,7 +61,7 @@ foreach ($path in $LibraryPaths) {
 }
 
 if (-not $LibraryFound) {
-    Write-Host "⚠ Fix8 library not found in standard locations" -ForegroundColor Yellow
+    Write-Host "[WARNING] Fix8 library not found in standard locations" -ForegroundColor Yellow
     Write-Host "  Checked paths:" -ForegroundColor Gray
     foreach ($path in $LibraryPaths) {
         Write-Host "    $path" -ForegroundColor Gray
@@ -70,14 +70,14 @@ if (-not $LibraryFound) {
 
 # Summary
 if ($Fix8Found -and $LibraryFound) {
-    Write-Host "✓ Fix8 installation verification completed successfully!" -ForegroundColor Green
+    Write-Host "[SUCCESS] Fix8 installation verification completed successfully!" -ForegroundColor Green
     Write-Host "  Headers: $Fix8HeaderPath" -ForegroundColor Green
     Write-Host "  Library: $Fix8LibraryPath" -ForegroundColor Green
 } elseif ($Fix8Found -or $LibraryFound) {
-    Write-Host "⚠ Partial Fix8 installation detected" -ForegroundColor Yellow
+    Write-Host "[WARNING] Partial Fix8 installation detected" -ForegroundColor Yellow
     Write-Host "  The project will attempt to build with stub implementation" -ForegroundColor Yellow
 } else {
-    Write-Host "⚠ Fix8 not found - using stub implementation for development" -ForegroundColor Yellow
+    Write-Host "[WARNING] Fix8 not found - using stub implementation for development" -ForegroundColor Yellow
     Write-Host "  This allows basic compilation but full Fix8 features won't be available" -ForegroundColor Yellow
 }
 

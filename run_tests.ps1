@@ -31,4 +31,4 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host ""
-Write-Host "✓ All tests passed successfully!" -ForegroundColor Green
+Write-Host "[SUCCESS] All tests passed successfully!" -ForegroundColor Green
